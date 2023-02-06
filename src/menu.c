@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <dirent.h> 
-
+#include "logger.h"
 
 #include "menu.h"
 
@@ -26,13 +26,14 @@ void DrawMenu(menu_t *menuData)
     printf("=     3. Add Customer                                      =\n");
     printf("=     4. Add Purchase                                      =\n");
     printf("=                                                          =\n");
-    printf("=     Customer ID [%d%d%d%d]                                   =\n", menuData->currentCustomer.customerId[0], menuData->currentCustomer.customerId[1], menuData->currentCustomer.customerId[2], menuData->currentCustomer.customerId[3]);
+    printf("=     Customer ID     [%d%d%d%d]                                   =\n", menuData->currentCustomer.customerId[0], menuData->currentCustomer.customerId[1], menuData->currentCustomer.customerId[2], menuData->currentCustomer.customerId[3]);
+    printf("=     Customer Name   [%s]                            =\n", menuData->currentCustomer.customerName);
     printf("=     Total Perchases [$%d]                                =\n", menuData->currentCustomer.totalSpend);
-    printf("=     Reward points [%d]                                   =\n", menuData->currentCustomer.rewardPoints);
+    printf("=     Reward points   [%d]                                   =\n", menuData->currentCustomer.rewardPoints);
     if (menuData->currentCustomer.rewardTier == BRONSE) str = "BRONSE";
     else if (menuData->currentCustomer.rewardTier == SILVER) str = "SILVER";
     else if (menuData->currentCustomer.rewardTier == GOLD) str = "GOLD";
-    printf("=     Reward Tier [%s]                                     =\n", str);
+    printf("=     Reward Tier     [%s]                                     =\n", str);
     printf("=                                                          =\n");
     printf("=                                                          =\n");
     printf("============================================================\n");
@@ -41,7 +42,7 @@ void DrawMenu(menu_t *menuData)
 void DrawList(menu_t *menuData)
 {
     int i;
-    char *str = {"Silver"};
+    char *str = {"None"};
     system("clear");
     printf("============================================================\n");
     printf("=  Cochlear Rewards v0.1                                   =\n");
@@ -53,26 +54,23 @@ void DrawList(menu_t *menuData)
     printf("=     3. Add Customer                                      =\n");
     printf("=     4. Add Purchase                                      =\n");
     printf("=                                                          =\n");
-    for(i = 0; i < MAX_CUSOMERS; i++)
+    for(i = 0; i < getTotalCutomer(); i++)
     {
         GetCustomerData(menuData, i);
-        printf("=     Customer ID [%d%d%d%d]                                =\n", menuData->currentCustomer.customerId[0], menuData->currentCustomer.customerId[1], menuData->currentCustomer.customerId[2], menuData->currentCustomer.customerId[3]);
+        printf("=     Customer ID     [%d%d%d%d]                           =\n", menuData->currentCustomer.customerId[0], menuData->currentCustomer.customerId[1], menuData->currentCustomer.customerId[2], menuData->currentCustomer.customerId[3]);
+        printf("=     Customer Name   [%s]                            =\n", menuData->currentCustomer.customerName);
         printf("=     Total Perchases [$%d]                            =\n", menuData->currentCustomer.totalSpend);
-        printf("=     Reward points [%d]                              =\n", menuData->currentCustomer.rewardPoints);
+        printf("=     Reward points   [%d]                              =\n", menuData->currentCustomer.rewardPoints);
         if (menuData->currentCustomer.rewardTier == BRONSE) str = "BRONSE";
         else if (menuData->currentCustomer.rewardTier == SILVER) str = "SILVER";
         else if (menuData->currentCustomer.rewardTier == GOLD) str = "GOLD";
-        printf("=     Reward Tier [%s]                             =\n", str);
+        printf("=     Reward Tier     [%s]                             =\n", str);
         printf("=                                                          =\n");
     }
     printf("=                                                          =\n");
     printf("============================================================\n");
  }
 
-void drawMore(char *message)
-{
-    printf("%s", message);
-}
 
 int ListFiles(void)
 {
@@ -90,7 +88,8 @@ int ListFiles(void)
 
 static void GetCustomerData(menu_t *menuData, char customerIndex)
 {
-    memcpy(menuData->currentCustomer.customerId, getCustomerId(customerIndex), 4);
+    memcpy(menuData->currentCustomer.customerId, getCustomerId(customerIndex), sizeof(getCustomerId(customerIndex)));
+    sprintf(menuData->currentCustomer.customerName, "%s", getCustomerName(customerIndex));
     menuData->currentCustomer.rewardPoints = getRewardPoints(customerIndex);
     menuData->currentCustomer.rewardTier = getRewardTier(customerIndex);
     menuData->currentCustomer.totalSpend = getTotalSpend(customerIndex);
@@ -100,8 +99,12 @@ static void GetCustomerData(menu_t *menuData, char customerIndex)
 // Menu implementation
 void menu(menu_t *menuData)
 {
+	char tmpBuff[130];
     int command, res;
-    char rxChar = '-';
+    int rxChar;
+    char name[50];
+    int purchases;
+    int tier;
 
     DrawMenu(menuData);
     while (keepRunning)
@@ -115,30 +118,30 @@ void menu(menu_t *menuData)
             break;
 
         case '2':
-            getchar();
-            rxChar = '-';
             printf("Enter Customer Number: ");
-            while (rxChar != '\n')
+            scanf("%d", &rxChar);
+            if ((rxChar > 0) && (rxChar <= getTotalCutomer()))
             {
-                rxChar = getchar();
-                printf("\nGot %d\n", rxChar);
-                if (((rxChar - 0x30) > 0) && ((rxChar - 0x30) < 10))
-                {
-                    printf("\nGot %d, GetCustomerData()\n", rxChar);
-                    GetCustomerData(menuData, rxChar - 0x31);
-                }
-                else if (rxChar == '\n')
-                {
-                    break;
-                }
+                GetCustomerData(menuData, rxChar - 1);
+                sprintf(tmpBuff, "GetCustomerData: name[%s], Id[%s]", getCustomerName(rxChar - 1), getCustomerId(rxChar - 1));
+                logger(__FUNCTION__, tmpBuff);
             }
-            printf("\nGot %d\n", rxChar);
-            
             DrawMenu(menuData);
             printf("View Customer Info.\n");
             break;
 
         case '3':
+            getchar();
+            rxChar = '-';
+            printf("Add Customer ");
+            printf("Enter new customer name: ");
+            scanf("%s", name);
+            printf("Enter any new customer purschases: ");
+            scanf("%d", &purchases);
+            printf("Enter new customer's reward tier: ");
+            scanf("%d", &tier);
+            AddCustomer(name, sizeof(name), purchases, tier);
+            DrawMenu(menuData);
             printf("Add Customer.\n");
             break;
 

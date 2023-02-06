@@ -5,10 +5,10 @@
 
 void logger(const char* tag, const char* message) 
 {
-   FILE *fptr = fopen("client.log", "a");
+   FILE *fptr = fopen("rewards.log", "a");
    if (fptr == NULL)
    {
-      fptr = fopen("client.log", "w");
+      fptr = fopen("rewards.log", "w");
       if (fptr == NULL)
       {
          return;

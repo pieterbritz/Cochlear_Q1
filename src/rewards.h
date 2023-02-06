@@ -4,10 +4,10 @@
 typedef struct
 {
     char customerId[4];
-    char cusomerName[100];
+    char customerName[100];
     int totalSpend;
     int rewardPoints;
-    int rewardTier;
+    char rewardTier;
 } type_Customer;
 
 typedef struct
@@ -22,15 +22,21 @@ enum
     NONE,
     BRONSE,
     SILVER,
-    GOLD
+    GOLD,
+    MAX_TIER
 } TIER;
 
 #define MAX_CUSOMERS 10
 
 void initCustomers(void);
 char * getCustomerId(char customerIndex);
+char * getCustomerName(char customerIndex);
 int getTotalSpend(char customerIndex);
 int getRewardPoints(char customerIndex);
 int getRewardTier(char customerIndex);
+uint8_t getTotalCutomer(void);
+void setTotalCutomer(uint8_t total);
+void AddCustomer(char * customerName, char nameLength, uint16_t totalSpend, uint16_t rewardTier);
+
 
 #endif // __REWARDS_H__
