@@ -57,14 +57,14 @@ void DrawList(menu_t *menuData)
     for(i = 0; i < getTotalCutomer(); i++)
     {
         GetCustomerData(menuData, i);
-        printf("=     Customer ID     [%d%d%d%d]                           =\n", menuData->currentCustomer.customerId[0], menuData->currentCustomer.customerId[1], menuData->currentCustomer.customerId[2], menuData->currentCustomer.customerId[3]);
+        printf("=     Customer ID     [%d%d%d%d]                      =\n", menuData->currentCustomer.customerId[0], menuData->currentCustomer.customerId[1], menuData->currentCustomer.customerId[2], menuData->currentCustomer.customerId[3]);
         printf("=     Customer Name   [%s]                            =\n", menuData->currentCustomer.customerName);
-        printf("=     Total Perchases [$%d]                            =\n", menuData->currentCustomer.totalSpend);
-        printf("=     Reward points   [%d]                              =\n", menuData->currentCustomer.rewardPoints);
+        printf("=     Total Perchases [$%d]                           =\n", menuData->currentCustomer.totalSpend);
+        printf("=     Reward points   [%d]                            =\n", menuData->currentCustomer.rewardPoints);
         if (menuData->currentCustomer.rewardTier == BRONSE) str = "BRONSE";
         else if (menuData->currentCustomer.rewardTier == SILVER) str = "SILVER";
         else if (menuData->currentCustomer.rewardTier == GOLD) str = "GOLD";
-        printf("=     Reward Tier     [%s]                             =\n", str);
+        printf("=     Reward Tier     [%s]                        =\n", str);
         printf("=                                                          =\n");
     }
     printf("=                                                          =\n");

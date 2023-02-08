@@ -1,5 +1,6 @@
 #ifndef __REWARDS_H__
 #define __REWARDS_H__
+#include <stdint.h>
 
 typedef struct
 {
@@ -29,6 +30,7 @@ enum
 #define MAX_CUSOMERS 10
 
 void initCustomers(void);
+void setCustomerId(char customerIndex, char digit1, char digit2, char digit3, char digit4);
 char * getCustomerId(char customerIndex);
 char * getCustomerName(char customerIndex);
 int getTotalSpend(char customerIndex);

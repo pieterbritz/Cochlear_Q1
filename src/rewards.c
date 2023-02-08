@@ -18,7 +18,7 @@ type_Customer customer[MAX_CUSOMERS];
 type_purchase purchase;
 uint8_t totalCustomers;
 
-static void setCustomerId(char customerIndex, char digit1, char digit2, char digit3, char digit4)
+void setCustomerId(char customerIndex, char digit1, char digit2, char digit3, char digit4)
 {
     customer[customerIndex].customerId[0] = digit1;
     customer[customerIndex].customerId[1] = digit2;
