@@ -146,6 +146,22 @@ void menu(menu_t *menuData)
             break;
 
         case '4':
+            printf("Enter new customer name: ");
+            scanf("%s", name);
+            res = FindCustomerIndex(char *name, sizeof(name));
+            if (res == -1)
+            {
+                printf("ERROR: Name not found.\n");
+                break;
+            }
+            printf("Enter customer purchase: ");
+            scanf("%d", purchases);
+            if (purchases >= 10000)
+            {
+                printf("ERROR: Max purchase of $10 000.\nPlease try again.\n");
+                break;
+            }
+            AddPurchase(res, purchases);
             DrawMenu(menuData);
             printf("Add Purchase.\n");
            break;

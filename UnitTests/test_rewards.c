@@ -16,7 +16,6 @@ static int setup(void)
 	return 0;
 }
 
-
 static int teardown(void)
 {
 	return 0;
@@ -43,3 +42,22 @@ static void test_getCustomerId(void)
     NP_ASSERT_EQUAL(data[2], 7);
     NP_ASSERT_EQUAL(data[3], 6);
 }
+
+static void test_getCustomerName(void)
+{
+    char customerIndex = 1;
+    char name[100];
+
+    memcpy(customer[1].customerName, "Bernard", sizeof("Bernard"));
+    memcpy(name, getCustomerName(customerIndex), 7);
+    NP_ASSERT_STR_EQUAL(customer[1].customerName, name);
+}
+
+/*
+int getTotalSpend(char customerIndex);
+int getRewardPoints(char customerIndex);
+int getRewardTier(char customerIndex);
+uint8_t getTotalCutomer(void);
+void setTotalCutomer(uint8_t total);
+void AddCustomer(char * customerName, char nameLength, uint16_t totalSpend, uint16_t rewardTier);
+*/

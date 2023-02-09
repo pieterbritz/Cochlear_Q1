@@ -171,4 +171,52 @@ void AddCustomer(char * customerName, char nameLength, uint16_t totalSpend, uint
     setTotalCutomer(getTotalCutomer() + 1);
 }
 
+int FindCustomerIndex(char *name, char lenght)
+{
+    int i, cmp;
+
+    for (i = 0; i < MAX_CUSOMERS; i++)
+    {
+        // Search for matching name
+        cmp = strcmp(customer[i].customerName, name);
+        if (!cmp)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void AddPurchase(char customerIndex, uint16_t purchases)
+{
+    int spend;
+
+    if (customerIndex >= totalCustomers)
+    {
+        return;
+    }
+
+    // Update total purchases
+    spend = getTotalSpend(customerIndex);
+    setTotalSpend(customerIndex, spend + purchases);
+
+    // Update total reward points
+    switch(getRewardTier(customerIndex))
+    {
+        case BRONSE:
+        setRewardPoints(customerIndex, getRewardPoints(customerIndex) + purchases);
+        break;
+        case SILVER:
+        setRewardPoints(customerIndex, getRewardPoints(customerIndex) + (purchases * SILVER));
+        break;
+        case GOLD:
+        setRewardPoints(customerIndex, getRewardPoints(customerIndex) + (purchases * GOLD));
+        break;
+        default:
+        printf("error: Unknown reward tier!\n");
+        break;
+    }
+}
+
+
 // End of file
