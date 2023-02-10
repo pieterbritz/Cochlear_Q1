@@ -133,29 +133,39 @@ void menu(menu_t *menuData)
         case '3':
             getchar();
             rxChar = '-';
-            printf("Add Customer ");
+            printf("Add Customer \n");
             printf("Enter new customer name: ");
             scanf("%s", name);
             printf("Enter any new customer purschases: ");
             scanf("%d", &purchases);
-            printf("Enter new customer's reward tier: ");
+            if (purchases > 10000)
+            {
+                printf("Purchase too large. Try again.\n");
+                break;
+            }
+            printf("Enter new customer's reward tier (1)Bronse (2)Silver (3)Gold: ");
             scanf("%d", &tier);
+            if ((tier < BRONSE) || (tier > GOLD))
+            {
+                printf("Wrong reward tier. Try again.\n");
+                break;
+            }
             AddCustomer(name, sizeof(name), purchases, tier);
             DrawMenu(menuData);
             printf("Add Customer.\n");
             break;
 
         case '4':
-            printf("Enter new customer name: ");
+            printf("Enter customer name: ");
             scanf("%s", name);
-            res = FindCustomerIndex(char *name, sizeof(name));
+            res = FindCustomerIndex(name, sizeof(name));
             if (res == -1)
             {
                 printf("ERROR: Name not found.\n");
                 break;
             }
             printf("Enter customer purchase: ");
-            scanf("%d", purchases);
+            scanf("%d", &purchases);
             if (purchases >= 10000)
             {
                 printf("ERROR: Max purchase of $10 000.\nPlease try again.\n");

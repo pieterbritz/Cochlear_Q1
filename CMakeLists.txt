@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.10)
+project(Rewards VERSION 1.0)
+
+file(COPY docs DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+
+file(COPY docs DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/Rewards-${Rewards_VERSION}")
+
+install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Rewards-${Rewards_VERSION}" TYPE DATA)
+
+# find all source files
+file(GLOB_RECURSE SRC_FILES src/*.c)
+add_executable(CochlearRewards ${SRC_FILES})
