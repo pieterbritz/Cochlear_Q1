@@ -7,6 +7,6 @@ file(COPY docs DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/Rewards-${Rewards_VERSIO
 
 install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Rewards-${Rewards_VERSION}" TYPE DATA)
 
-# find all source files
-file(GLOB_RECURSE SRC_FILES src/*.c)
-add_executable(CochlearRewards ${SRC_FILES})
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0")
+
+add_subdirectory (src)

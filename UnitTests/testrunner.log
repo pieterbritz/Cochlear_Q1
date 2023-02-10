@@ -1,0 +1,18 @@
+np: [2023-02-11T01:04:39.865341][void be_valground():53][INFO] starting valgrind
+np: [2023-02-11T01:04:40.966644][void np::testmanager_t::print_banner():80][INFO] NovaProva Copyright (c) Gregory Banks
+np: [2023-02-11T01:04:41.030449][void np::testmanager_t::print_banner():81][INFO] Built for O/S linux architecture x86_64
+np: running
+np: running: "test_rewards.setCustomerId"
+PASS test_rewards.setCustomerId
+np: running: "test_rewards.getCustomerId"
+PASS test_rewards.getCustomerId
+np: running: "test_rewards.getCustomerName"
+PASS test_rewards.getCustomerName
+np: running: "test_rewards.spending"
+PASS test_rewards.spending
+np: running: "test_rewards.totalCustomers"
+PASS test_rewards.totalCustomers
+np: running: "test_rewards.addCustomer"
+PASS test_rewards.addCustomer
+np: 6 run 0 failed
+PASS testrunner (exit status: 0)

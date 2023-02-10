@@ -54,7 +54,7 @@ void DrawList(menu_t *menuData)
     printf("=     3. Add Customer                                      =\n");
     printf("=     4. Add Purchase                                      =\n");
     printf("=                                                          =\n");
-    for(i = 0; i < getTotalCutomer(); i++)
+    for(i = 0; i < getTotalCutomers(); i++)
     {
         GetCustomerData(menuData, i);
         printf("=     Customer ID     [%d%d%d%d]                      =\n", menuData->currentCustomer.customerId[0], menuData->currentCustomer.customerId[1], menuData->currentCustomer.customerId[2], menuData->currentCustomer.customerId[3]);
@@ -120,7 +120,7 @@ void menu(menu_t *menuData)
         case '2':
             printf("Enter Customer Number: ");
             scanf("%d", &rxChar);
-            if ((rxChar > 0) && (rxChar <= getTotalCutomer()))
+            if ((rxChar > 0) && (rxChar <= getTotalCutomers()))
             {
                 GetCustomerData(menuData, rxChar - 1);
                 sprintf(tmpBuff, "GetCustomerData: name[%s], Id[%s]", getCustomerName(rxChar - 1), getCustomerId(rxChar - 1));

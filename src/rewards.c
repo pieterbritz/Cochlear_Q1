@@ -58,7 +58,7 @@ void setTotalCutomer(uint8_t total)
     totalCustomers = total;
 }
 
-uint8_t getTotalCutomer(void)
+uint8_t getTotalCutomers(void)
 {
  	char tmpBuff[130];
     sprintf(tmpBuff, "totalCustomers[%d]", totalCustomers);
@@ -157,18 +157,18 @@ void initCustomers(void)
 
 void AddCustomer(char * customerName, char nameLength, uint16_t totalSpend, uint16_t rewardTier)
 {
-    if (getTotalCutomer() < 10)
-        setCustomerId(getTotalCutomer(), 0, 0, 0, getTotalCutomer() + 1);
-    else if (getTotalCutomer() < 100)
-        setCustomerId(getTotalCutomer(), 0, 0, getTotalCutomer() / 10, (getTotalCutomer() % 10) + 1);
-    setCustomerName(getTotalCutomer(), customerName, nameLength);
-    setRewardTier(getTotalCutomer(), rewardTier);
-    setTotalSpend(getTotalCutomer(), totalSpend);
+    if (getTotalCutomers() < 10)
+        setCustomerId(getTotalCutomers(), 0, 0, 0, getTotalCutomers() + 1);
+    else if (getTotalCutomers() < 100)
+        setCustomerId(getTotalCutomers(), 0, 0, getTotalCutomers() / 10, (getTotalCutomers() % 10) + 1);
+    setCustomerName(getTotalCutomers(), customerName, nameLength);
+    setRewardTier(getTotalCutomers(), rewardTier);
+    setTotalSpend(getTotalCutomers(), totalSpend);
     if (rewardTier < MAX_TIER)
-        setRewardPoints(getTotalCutomer(), totalSpend * rewardTier);
+        setRewardPoints(getTotalCutomers(), totalSpend * rewardTier);
     else
         printf("error: Incorrect reward tier!\n");
-    setTotalCutomer(getTotalCutomer() + 1);
+    setTotalCutomer(getTotalCutomers() + 1);
 }
 
 int FindCustomerIndex(char *name, char lenght)

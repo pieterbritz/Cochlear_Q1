@@ -32,15 +32,12 @@ static void test_setCustomerId(void)
 
 static void test_getCustomerId(void)
 {
-    char data[4];
-
     setCustomerId(1, 9, 8, 7, 6);
-    memcpy(data, getCustomerId(1), 4);
 
-    NP_ASSERT_EQUAL(data[0], 9);
-    NP_ASSERT_EQUAL(data[1], 8);
-    NP_ASSERT_EQUAL(data[2], 7);
-    NP_ASSERT_EQUAL(data[3], 6);
+    NP_ASSERT_EQUAL(customer[1].customerId[0], 9);
+    NP_ASSERT_EQUAL(customer[1].customerId[1], 8);
+    NP_ASSERT_EQUAL(customer[1].customerId[2], 7);
+    NP_ASSERT_EQUAL(customer[1].customerId[3], 6);
 }
 
 static void test_getCustomerName(void)
@@ -48,16 +45,47 @@ static void test_getCustomerName(void)
     char customerIndex = 1;
     char name[100];
 
-    memcpy(customer[1].customerName, "Bernard", sizeof("Bernard"));
-    memcpy(name, getCustomerName(customerIndex), 7);
-    NP_ASSERT_STR_EQUAL(customer[1].customerName, name);
+    memcpy(customer[customerIndex].customerName, "Bernard", sizeof("Bernard"));
+    snprintf(name, 8, "%s", getCustomerName(customerIndex));
+    NP_ASSERT_STR_EQUAL(customer[customerIndex].customerName, name);
+}
+
+static void test_spending(void)
+{
+    customer[2].customerId[0] = 4;
+    customer[2].customerId[0] = 5;
+    customer[2].customerId[0] = 6;
+    customer[2].customerId[0] = 7;
+    customer[2].rewardPoints = 400;
+    customer[2].totalSpend = 200;
+    customer[2].rewardTier = 2;
+    setTotalCutomer(3);
+
+    NP_ASSERT_EQUAL(getTotalSpend(2), 200);
+    NP_ASSERT_EQUAL(getRewardPoints(2), 400);
+    NP_ASSERT_EQUAL(getRewardTier(2), 2);
+}
+
+static void test_totalCustomers(void)
+{
+    setTotalCutomer(6);
+    NP_ASSERT_EQUAL(getTotalCutomers(), 6);
+}
+
+static void test_addCustomer(void)
+{
+    setTotalCutomer(0);
+    AddCustomer("John", 5, 200, 3);
+    NP_ASSERT_EQUAL(customer[0].customerId[0], 0);
+    NP_ASSERT_EQUAL(customer[0].customerId[1], 0);
+    NP_ASSERT_EQUAL(customer[0].customerId[2], 0);
+    NP_ASSERT_EQUAL(customer[0].customerId[3], 1);
+    NP_ASSERT_STR_EQUAL(customer[0].customerName, "John");
+    NP_ASSERT_EQUAL(customer[0].totalSpend, 200);
+    NP_ASSERT_EQUAL(customer[0].rewardTier, 3);
+    NP_ASSERT_EQUAL(customer[0].rewardPoints, 600);
 }
 
 /*
-int getTotalSpend(char customerIndex);
-int getRewardPoints(char customerIndex);
-int getRewardTier(char customerIndex);
-uint8_t getTotalCutomer(void);
-void setTotalCutomer(uint8_t total);
 void AddCustomer(char * customerName, char nameLength, uint16_t totalSpend, uint16_t rewardTier);
 */

@@ -36,7 +36,7 @@ char * getCustomerName(char customerIndex);
 int getTotalSpend(char customerIndex);
 int getRewardPoints(char customerIndex);
 int getRewardTier(char customerIndex);
-uint8_t getTotalCutomer(void);
+uint8_t getTotalCutomers(void);
 void setTotalCutomer(uint8_t total);
 void AddCustomer(char * customerName, char nameLength, uint16_t totalSpend, uint16_t rewardTier);
 int FindCustomerIndex(char *name, char lenght);
